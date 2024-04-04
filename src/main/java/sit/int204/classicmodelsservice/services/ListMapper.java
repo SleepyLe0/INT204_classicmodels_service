@@ -18,7 +18,7 @@ public class ListMapper {
         return source.stream().map(entity -> modelMapper.map(entity, targetClass)).collect(Collectors.toList());
     }
     public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
-        return mapList(source,targetClass, modelMapper);
+        return mapList(source, targetClass, modelMapper);
     }
     public static ListMapper getInstance() {
         return listMapper;

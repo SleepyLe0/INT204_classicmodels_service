@@ -1,6 +1,5 @@
 package sit.int204.classicmodelsservice.services;
 
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -13,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int204.classicmodelsservice.dtos.NewCustomerDto;
 import sit.int204.classicmodelsservice.entities.Customer;
-import sit.int204.classicmodelsservice.entities.Employee;
-import sit.int204.classicmodelsservice.entities.Order;
-import sit.int204.classicmodelsservice.exceptions.ItemNotFoundException;
 import sit.int204.classicmodelsservice.repositories.CustomerRepository;
 import sit.int204.classicmodelsservice.repositories.EmployeeRepository;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
@@ -43,8 +39,6 @@ public class CustomerService {
     }
 
     public Page<Customer> getCustomers(int page, int size) {
-        String x = null;
-        x.toLowerCase();
         return repository.findAll(PageRequest.of(page, size));
     }
 

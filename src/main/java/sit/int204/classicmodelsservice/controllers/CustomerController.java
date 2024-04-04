@@ -4,17 +4,19 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sit.int204.classicmodelsservice.dtos.NewCustomerDto;
 import sit.int204.classicmodelsservice.dtos.SimpleCustomerDTO;
 import sit.int204.classicmodelsservice.entities.Customer;
-import sit.int204.classicmodelsservice.entities.Customera;
 import sit.int204.classicmodelsservice.entities.Order;
 import sit.int204.classicmodelsservice.services.CustomerService;
 import sit.int204.classicmodelsservice.services.ListMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -32,9 +34,8 @@ public class CustomerController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
         if (pageable) {
-            Page<Customer> customerPage = service.getCustomers(page, pageSize);
-            return ResponseEntity.ok(listMapper.toPageDTO(customerPage,
-                    SimpleCustomerDTO.class));
+            Page<Customer> customers = service.getCustomers(page, pageSize);
+            return ResponseEntity.ok(listMapper.mapList(customers.stream().toList(), SimpleCustomerDTO.class, modelMapper));
         } else {
             return ResponseEntity.ok(listMapper.mapList(service.getCustomers(),
                     SimpleCustomerDTO.class));
